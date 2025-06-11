@@ -29,7 +29,10 @@ class Browser(object):
         self._tabs[tab.id] = tab
         return tab
 
-    def list_tab(self, timeout=None):
+    def list_tab(self, timeout=None, use_cache=False):
+        if use_cache:
+            return list(self._tabs.values())
+
         rp = requests.get("%s/json" % self.dev_url, json=True, timeout=timeout)
         tabs_map = {}
         for tab_json in rp.json():
